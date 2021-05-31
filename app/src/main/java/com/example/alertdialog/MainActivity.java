@@ -5,8 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
@@ -43,14 +45,28 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                builder.setMessage("Are you sure?")
-                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+
+                View view = LayoutInflater.from(MainActivity.this).inflate(R.layout.activity_main2,null);
+                final EditText username = (EditText) view.findViewById(R.id.username);
+                final EditText password = (EditText) view.findViewById(R.id.password);
+
+                builder.setMessage("Login")
+                        .setView(view)
+                        .setPositiveButton("Login", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                tv3.setText("5000 INR");
+                                String u = username.getText().toString();
+                                String p = password.getText().toString();
+                                if(u.equals("Inu") && p.equals("1234")){
+                                    tv3.setText("5000");
+                                }
+                                else
+                                    tv3.setText("Fuck off");
+
                             }
                         })
                         .setNegativeButton("Cancel", null)
+                        .setCancelable(false)
                 ;
 
                 AlertDialog alert = builder.create();
